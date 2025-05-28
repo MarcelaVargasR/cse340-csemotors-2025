@@ -3,4 +3,335 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 20px;
+  padding-inline: 10px;
+   background-color: #262446;
+}
+
+.sitename-title {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 40px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #262446;
+  
+}
+
+.login-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #262446;
+}
+
+/* nav */
+.nav {
+  background-color: #371d47;
+  padding: 10px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: black;
+  background-color: #e1c2ff;
+  padding: 10px;
+  transition: color 0.3s;
+}
+
+/* main */
+/* main-header */
+.promo-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.vehicle-showcase {
+  position: relative;
+  margin-bottom: 50px;
+}
+.vehicle-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+}
+
+.vehicle-details {
+  position: absolute;
+  top: 20%;
+  left: 1%;
+  background-color: #5632708f;
+  color: #fdfdfd;
+  border-radius: 8px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  padding: 10px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.vehicle-feature {
+  margin: 0;
+}
+
+.font-title {
+  font-size: 1.25rem;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+
+.btn {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  background-color: #371d47;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.btn:hover {
+  color: black;
+  background-color: #e1c2ff;
+  padding: 10px;
+  transition: color 0.3s;
+}
+
+/* main reviews*/
+.reviews-section {
+  margin-bottom: 30px;
+  margin-left: 5px;
+}
+
+.section-title {
+  font-size: 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  padding-block: 10px;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: circle;
+  padding-left: 1.5rem;
+}
+
+.review-item {
+  align-items: flex-start;
+}
+
+/* main upgrades */
+.upgrade-title {
+  font-size: 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  padding-block: 10px;
+  margin-left: 5px;
+}
+
+.upgrade-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-block: 10px;
+  margin-bottom: 10px;
+}
+
+.upgrade-list-item {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.upgrade-list-text {
+  padding-block: 10px;
+}
+
+.upgrade-list-image-container {
+  background-color: #371d47d7;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.upgrade-list-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* Footer */
+.footer{
+   background-color: #2f2c35;
+   text-align: center;
+  padding: 1rem;
+  margin: 0;
+}
+
+.copyright {
+    margin-block: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #2f2c35;
+  }
+
+/* Mobile first */
+/* @media (max-width: 600px) {
+  .vehicle-image img {
+    max-width: 100%; 
+  }
+} */
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .login-title {
+    color: white;
+  }
+
+  .nav {
+    margin-bottom: 20px;
+    background-color: #8320a1;
+    color: black;
+  }
+
+  .nav-link:hover {
+    background-color: #371d47;
+    color: white;
+  }
+
+  .vehicle-image img {
+    max-width: 80%;
+  }
+
+  .vehicle-details {
+    left: 10%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-image: url("https://images.unsplash.com/photo-1637677121980-6f39c0b61500?q=80&w=1952&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .main {
+    background-color: white;
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .promo-title {
+    font-size: 30px;
+  }
+
+  .vehicle-image img {
+    max-width: 500px;
+  }
+
+
+  .login-title {
+    color: white;
+  }
+
+  .nav {
+    margin-bottom: 20px;
+    background-color: #8320a1;
+    color: black;
+  }
+
+  .nav-link:hover {
+    background-color: #371d47;
+    color: white;
+  }
+
+  .vehicle-details {
+    left: 10%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-image: url("https://images.unsplash.com/photo-1637677121980-6f39c0b61500?q=80&w=1952&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .main {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-up-revws {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .copyright {
+    margin-block: 20px;
+    font-size: 20px;
+    font-weight: 400;
+  }
 }
