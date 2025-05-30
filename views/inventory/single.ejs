@@ -1,0 +1,49 @@
+
+<%# A consistant header among pages%>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# A message block available for messages we want to add to the page later%>
+<%# messages() %>
+
+<%# The code to display the single view %>
+<%# This code is very simple the view is meant to display content, not necessarily to contain logic %>
+<%- view %>
+<div>
+  <ul>
+    <li><h2 class="reviews">Customer Reviews</h2></li>
+    <%# if (!reviews || reviews.length === 0) { %>
+        <p><mark>Be the first to leave a review!</mark></p>
+    <%# } else { %>
+      <%# reviews.forEach(function(review) { %>
+        <!-- <p><%#= locals.accountData.account_firstname %> wrote on <%#= review.review_date  %></p>
+        <hr />
+        <table id="reviewDisplay"></table>
+      <%# }); %>
+    <%# } %> -->
+    <% if (loggedin) { %>
+    <h3 class="add-review">Add Your Own Review</h3>
+    <form id="addReview" class="add-review" action="reviews/add-review" method="post">
+    <fieldset>
+      <label for="account_firstname"><strong>Screen Name:</strong></label><br>
+      <input type="text" id="account_firstname" name="account_firstname" required value="<%= locals.account_firstname %>"><br>
+      <label for="review_text"><strong>Review:</strong></label><br>
+      <textarea id="review_text" name="review_text" rows="4" cols="50" required placeholder="Write your review here."></textarea><br>
+      <input type="submit" name="submit" value="Submit Review" disabled>
+      <input type="hidden" name="inv_id"
+      <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+      <% } %>>
+      <input type="hidden" name="account_id"
+      <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+      <% } %>>
+    </fieldset>
+    <% } else { %>
+    <li>You must <a title="Click to log in" href="/account/login">login</a> to write a review.</li>
+    <% } %>
+  </ul>
+</div>
+
+<script src="../../js/add-reviews.js"></script>
