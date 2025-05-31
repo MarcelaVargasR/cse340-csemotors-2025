@@ -285,6 +285,12 @@
   list-style: none;
 }
 
+.error-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 /* Footer */
 .footer {
   background-color: #2f2c35;
@@ -460,6 +466,10 @@
   .vehicle-price {
     font-weight: 500;
     color: #444;
+  }
+
+  .title-info, .title-error, .error-info{
+    color: white;
   }
 
   .copyright {

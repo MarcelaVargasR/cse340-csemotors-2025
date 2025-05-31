@@ -1,12 +1,15 @@
 <%# A consistant header among pages%>
  <% if (title) { %>
-    <h1><%= title %></h1>
+    <h1 class="title-error"><%= title %></h1>
   <% } else { %>
     <h1>Oops!</h1>
   <% } %>
 
   <% if (message) { %>
-    <p><%= message %></p>
+    <p class="title-error"><%= message %></p>
   <% } else { %>
-    <p> Sorry, we appear to have lost that page..</p>
+    <p class="title-info"> Sorry, we appear to have lost that page..</p>
   <% } %>
+  <% if (title == 500 || title == 404 || title == "Server Error") { %>
+  <img src="https://http.cat/500" alt="Funny 500 Cat" class="error-img">
+<% } %>
