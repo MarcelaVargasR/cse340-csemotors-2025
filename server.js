@@ -13,6 +13,11 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index");
+const session = require("express-session")
+const pool = require('./database/')
+
+
+
 
 /* ***********************
  * View Engine and Templates
@@ -20,6 +25,25 @@ const utilities = require("./utilities/index");
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
+
+
+
+/* ***********************
+ * Middleware
+ * ************************/
+ app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+
+
 
 /* ***********************
  * Routes
@@ -33,6 +57,9 @@ app.use("/inv", inventoryRoute);
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });
 });
+
+
+
 
 /* ***********************
  * Express Error Handler
@@ -52,6 +79,10 @@ app.use(async (err, req, res, next) => {
     nav,
   });
 });
+
+
+
+
 
 /* ***********************
  * Local Server Information
