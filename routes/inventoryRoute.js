@@ -16,14 +16,14 @@ router.get("/trigger-error", utilities.handleErrors(errorController.throwError))
 // GET inventory management view
 router.get('/', invController.buildManagementView);
 // Route to build Add New Classification view
-// router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
 // Process the new classification data
-// router.post(
-//   "/add-classification",
-//   validate.addClassRules(),
-//   validate.checkClassData,
-//   utilities.handleErrors(invController.addNewClass)
-// );
+router.post(
+  "/add-classification",
+  validate.classificationRules(),
+  validate.checkClassData,
+  utilities.handleErrors(invController.addNewClass)
+);
 
 
 

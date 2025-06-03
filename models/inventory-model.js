@@ -30,7 +30,7 @@ async function getInventoryByClassificationId(classification_id) {
 /* *****************************
  *   Add new vehicle classification
  * *************************** */
-async function addNewClass(classification_name) {
+async function addClassification(classification_name) {
   try {
     const sql =
       "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";
@@ -58,8 +58,24 @@ async function getSingleByInventoryId(inv_id) {
   }
 }
 
+/* ******************************
+ *  Check for existing classification name
+ * ****************************** */
+async function checkExistingClass(classification_name) {
+  try {
+    const sql = "SELECT * FROM classification WHERE classification_name = $1";
+    const result = await pool.query(sql, [classification_name]);
+    return result.rowCount > 0; // true if exists, false otherwise
+  } catch (error) {
+    console.error("Error checking existing classification:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
+  addClassification,
   getSingleByInventoryId,
+  checkExistingClass
 };

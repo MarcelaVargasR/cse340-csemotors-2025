@@ -6,7 +6,7 @@ const invModel = require("../models/inventory-model")
 /*  **********************************
   *  Add Classification Data Validation Rules
   * ********************************* */
-validate.addClassRules = () => {
+validate.classificationRules = () => {
     return [
       // valid classification is required
       body("classification_name")

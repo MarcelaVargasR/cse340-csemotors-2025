@@ -36,18 +36,6 @@ invCont.buildByInventoryId = async function (req, res, next) {
   });
 };
 
-/* ***************************
- *  Deliver add new classification view
- * ************************** */
-invCont.buildAddClassification = async function (req, res, next) {
-  let nav = await utilities.getNav();
-  res.render("inventory/add-classification", {
-    title: "Add New Classification",
-    nav,
-    errors: null,
-  });
-};
-
 /* ****************************************
  *  Build Management View
  * *************************************** */
@@ -62,36 +50,47 @@ invCont.buildManagementView = async function (req, res, next) {
   });
 };
 
+/* ***************************
+ *  Add new classification view
+ * ************************** */
+invCont.buildAddClassification = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+    errors: null,
+    message: req.flash("notice"),
+  });
+};
+
 /* ****************************************
  *  Process New Classification
  * *************************************** */
-// invCont.addNewClass = async function (req, res, next) {
-//   let nav = await utilities.getNav();
-//   let manageView = await utilities.buildManagementView();
-//   const classificationSelect = await utilities.buildClassificationList();
-//   const { classification_name } = req.body;
-//   const newClassResult = await invModel.addNewClass(classification_name);
+invCont.addNewClass = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const { classification_name } = req.body;
+  const result = await invModel.addClassification(classification_name);
 
-//   if (newClassResult) {
-//     req.flash(
-//       "notice",
-//       `Successfully added classification "${classification_name}".`
-//     );
-//     res.status(201).render("inventory/management", {
-//       title: "Vehicle Management",
-//       nav,
-//       manageView,
-//       errors: null,
-//       classificationSelect,
-//     });
-//   } else {
-//     req.flash("notice", "Failed to add classification.");
-//     res.status(501).render("inventory/add-classification", {
-//       title: "Add New Classification",
-//       nav,
-//       errors: null,
-//     });
-//   }
-// };
+  if (result) {
+    req.flash(
+      "notice",
+      `Successfully added classification "${classification_name}".`
+    );
+    const newNav = await utilities.getNav();
+    res.status(201).render("inventory/management", {
+      title: "Vehicle Management",
+      nav: newNav,
+      message: req.flash("notice"),
+    });
+  } else {
+    req.flash("notice", "Failed to add classification.");
+    res.status(501).render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      errors: null,
+      message: req.flash("notice"),
+    });
+  }
+};
 
 module.exports = invCont;
