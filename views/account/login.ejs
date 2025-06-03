@@ -4,9 +4,13 @@
   <% } else { res.redirect('/') } %> 
 
   <%# A message block%> 
-  <% if (message) { %>
-    <div class="flash-message"><%= message %></div>
+  <% if (message && message.length > 0) { %>
+  <div class="flash-message"><%= message %></div>
   <% } %>
+
+  <!-- <% if (message) { %>
+    <div class="flash-message"><%= message %></div>
+  <% } %> -->
 
   <%#Code block to display errors %> 
   <% if (errors) { %>
@@ -17,20 +21,18 @@
   </ul>
   <% } %>
 
-  <form action="/account/login" method="post" class="login-form">
+  <form id="loginForm" action="/account/login" method="post" class="login-form">
     <label for="account_email">Email Address:</label>
-    <input type="email" id="account_email" name="account_email" required />
-
+    <input type="email" id="account_email" name="account_email" required placeholder="Enter a valid email address"/>
     <label for="account_password">Password:</label>
     <input
       type="password"
       id="account_password"
       name="account_password"
       required
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$"
+      title="Password must be at least 12 characters and include 1 uppercase, 1 lowercase, 1 number, and 1 special character."
     />
-    <span
-      >Passwords must be minimum of 12 characters and include 1 capital letter,
-      1 number and 1 special character.</span>
     <input type="submit" value="Login" />
   </form>
   <p class="signup-link">No account? <a href="/account/register">Sign-up</a></p>
