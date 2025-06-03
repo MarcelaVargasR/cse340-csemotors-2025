@@ -1,9 +1,18 @@
 <div class="form-container">
   <h1><%= title %></h1>
 
-  <% if (message) { %>
+  <!-- <% if (message) { %>
     <div class="flash-message"><%= message %></div>
-  <% } %>
+  <% } %> -->
+
+  <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+  
 
   <form action="/account/register" method="post" class="register-form">
     <label for="account_firstname">First name</label>
@@ -34,15 +43,16 @@
       placeholder="Enter a valide email address"
     />
 
-    <label for="account_password">Password</label>
     <div class="password-wrapper">
-      <input
+    <label for="account_password">Password</label>
+    <input
         type="password"
         id="account_password"
         name="account_password"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
         required
       /><br>
-      <span>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</span><br>
+    <span>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</span><br>
     </div>
     <button type="submit" value="Register">Register</button>
   </form>
