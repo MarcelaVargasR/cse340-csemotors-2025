@@ -1,10 +1,19 @@
-<h1>Inventory Management</h1>
+<%# A message block available for messages we want to add to the page later%>
+<%- messages() %>
 
-  <% if (message && message.length > 0) { %>
-    <div class="flash-message"><%= message %></div>
-  <% } %>
+<%# Code block to display errors %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
 
+<div class="form-container">
+  <h1 class="management-title">Vehicle Management</h1>
   <ul class="management-links">
-    <li><a href="/inv/add-classification">Add New Classification</a></li>
-    <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+    <li class="management-link"><a class="management-button" href="/inv/add-classification">Add New Classification</a></li>
+    <li class="management-link"><a class="management-button" href="/inv/add-vehicle">Add New Vehicle</a></li>
   </ul>
+</div>

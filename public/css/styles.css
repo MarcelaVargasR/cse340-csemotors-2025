@@ -443,6 +443,44 @@
   height: auto;
 }
 
+/* Management view */
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #3A3566;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.management-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.management-link {
+  margin-bottom: 1rem;
+}
+
+.management-button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0056b3;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.management-button:hover {
+  background-color: #0056b3;
+}
+
 /* Footer */
 .footer {
   background-color: #2f2c35;
