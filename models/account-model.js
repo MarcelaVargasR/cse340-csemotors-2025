@@ -7,7 +7,7 @@ async function registerAccount(
   account_firstname,
   account_lastname,
   account_email,
-  account_password
+  hashedPassword
 ) {
   try {
     const sql = `
@@ -19,7 +19,7 @@ async function registerAccount(
       account_firstname,
       account_lastname,
       account_email,
-      account_password,
+      hashedPassword,
     ]);
     return result.rows[0];
   } catch (error) {
@@ -43,4 +43,4 @@ async function checkExistingEmail(account_email) {
 }
 
 
-module.exports = { registerAccount };
+module.exports = { registerAccount , checkExistingEmail};
