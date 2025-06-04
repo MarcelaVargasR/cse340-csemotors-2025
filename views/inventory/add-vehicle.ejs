@@ -1,0 +1,50 @@
+<%# A message block available for messages we want to add to the page later%>
+<%- messages() %>
+
+<%# Code block to display errors %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<div class="form-container">
+  <h1 class="form-title">Add New Vehicle</h1>
+  <p class="form-subtitle">ALL FIELDS ARE REQUIRED.</p>
+
+  <form class="new-vehicle-form" action="/inv/add-vehicle" method="post">
+    <label class="form-label" for="classificationList"><strong>Classification:</strong></label><br>
+    <%- classificationSelect %><br>
+
+    <label class="form-label" for="inv_make"><strong>Make:</strong></label><br>
+    <input class="form-input" type="text" id="inv_make" name="inv_make" required value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"><br>
+
+    <label class="form-label" for="inv_model"><strong>Model:</strong></label><br>
+    <input class="form-input" type="text" id="inv_model" name="inv_model" required value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"><br>
+
+    <label class="form-label" for="inv_description"><strong>Description:</strong></label><br>
+    <textarea class="form-textarea" id="inv_description" name="inv_description" required><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea><br>
+
+    <label class="form-label" for="inv_image"><strong>Image Path:</strong></label><br>
+    <input class="form-input" type="text" id="inv_image" name="inv_image" required value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>"><br>
+
+    <label class="form-label" for="inv_thumbnail"><strong>Thumbnail Path:</strong></label><br>
+    <input class="form-input" type="text" id="inv_thumbnail" name="inv_thumbnail" required value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image-tn.png' %>"><br>
+
+    <label class="form-label" for="inv_price"><strong>Price:</strong></label><br>
+    <input class="form-input" type="number" step="0.01" id="inv_price" name="inv_price" required value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"><br>
+
+    <label class="form-label" for="inv_year"><strong>Year:</strong></label><br>
+    <input class="form-input" type="number" id="inv_year" name="inv_year" required value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"><br>
+
+    <label class="form-label" for="inv_miles"><strong>Miles:</strong></label><br>
+    <input class="form-input" type="number" id="inv_miles" name="inv_miles" required value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>"><br>
+
+    <label class="form-label" for="inv_color"><strong>Color:</strong></label><br>
+    <input class="form-input" type="text" id="inv_color" name="inv_color" required value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"><br>
+
+    <input class="form-submit" type="submit" value="Add Vehicle">
+  </form>
+</div>

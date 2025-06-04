@@ -531,6 +531,69 @@
   background-color: #0056b3;
 }
 
+/* Add Vehicle View */
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #3a3566;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-subtitle {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-submit {
+  margin-top: 2rem;
+  width: 100%;
+  background-color: #0056B3;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+  background-color: #0056b3;
+}
+
+
 /* Footer */
 .footer {
   background-color: #2f2c35;
