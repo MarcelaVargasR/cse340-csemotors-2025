@@ -34,7 +34,16 @@ router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  utilities.handleErrors(accountController.loginAccount)
+  utilities.handleErrors(accountController.accountLogin)
+);
+
+/* ***********************************
+ * Deliver Account Management View
+ * ******************************** */
+router.get(
+  "/",
+  utilities.checkLogin, 
+  utilities.handleErrors(accountController.buildAccountManagement)
 );
 
 // Export the router

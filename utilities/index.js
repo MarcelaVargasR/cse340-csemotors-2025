@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken");
 const Util = {}
 
 /* ************************
@@ -123,5 +124,28 @@ Util.buildClassificationList = async function (classification_id = null) {
   classificationList += "</select>"
   return classificationList
 }
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    req.flash("notice", "You must be logged in to view this page.");
+    return res.redirect("/account/login");
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    res.locals.accountData = decoded; // optional
+    res.locals.loggedin = true;
+    next();
+  } catch (err) {
+    req.flash("notice", "Session expired or invalid token.");
+    return res.redirect("/account/login");
+  }
+};
+
 
 module.exports = Util
