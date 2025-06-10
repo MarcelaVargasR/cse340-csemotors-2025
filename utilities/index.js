@@ -129,20 +129,10 @@ Util.buildClassificationList = async function (classification_id = null) {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  const token = req.cookies.jwt;
-
-  if (!token) {
-    req.flash("notice", "You must be logged in to view this page.");
-    return res.redirect("/account/login");
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    res.locals.accountData = decoded; // optional
-    res.locals.loggedin = true;
+  if (res.locals.loggedin) {
     next();
-  } catch (err) {
-    req.flash("notice", "Session expired or invalid token.");
+  } else {
+    req.flash("notice", "Please log in.");
     return res.redirect("/account/login");
   }
 };

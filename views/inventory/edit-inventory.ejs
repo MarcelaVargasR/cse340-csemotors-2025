@@ -11,10 +11,11 @@
 <% } %>
 
 <div class="form-container">
-  <h1 class="form-title">Add New Vehicle</h1>
+  <h1 class="form-title">Edit <%= inv_make %> <%= inv_model %></h1>
   <p class="form-subtitle">ALL FIELDS ARE REQUIRED.</p>
 
-  <form class="new-vehicle-form" action="/inv/add-vehicle" method="post">
+  <form class="new-vehicle-form" action="/inv/update" method="post">
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
     <label class="form-label" for="classificationList"><strong>Classification:</strong></label><br>
     <%- classificationSelect %><br>
 
@@ -45,6 +46,6 @@
     <label class="form-label" for="inv_color"><strong>Color:</strong></label><br>
     <input class="form-input" type="text" id="inv_color" name="inv_color" required value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"><br>
 
-    <input class="form-submit" type="submit" value="Add Vehicle">
+    <input class="form-submit" type="submit" value="Update Vehicle">
   </form>
 </div>

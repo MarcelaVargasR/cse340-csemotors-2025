@@ -16,12 +16,25 @@ router.get(
   "/detail/:inventoryId",
   utilities.handleErrors(invController.buildByInventoryId)
 );
+// JSON route to return inventory by classification ID
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+// Route to build the edit inventory item view
+router.get(
+  "/edit/:inventory_id",
+  utilities.handleErrors(invController.buildEditInventoryView)
+);
+
 // router.get("/inventory/detail/:invId", invController.buildDetailView)
 // Intentional 500 error test route
 router.get(
   "/trigger-error",
   utilities.handleErrors(errorController.throwError)
 );
+
 // GET inventory management view
 router.get("/", invController.buildManagementView);
 // Route to build Add New Classification view

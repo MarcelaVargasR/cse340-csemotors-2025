@@ -18,4 +18,14 @@
     <li class="management-link"><a class="management-button" href="/inv/add-classification">Add New Classification</a></li>
     <li class="management-link"><a class="management-button" href="/inv/add-vehicle">Add New Vehicle</a></li>
   </ul>
+  <h2 class="management-sub">Manage Inventory</h2>
+  <p class="management-instructions">Select a classification from the list to see the inventory items.</p>
+  <form id="classification-form">
+    <%- classificationSelect %>
+  </form>
+  <table id="inventoryDisplay">
+  </table>
+  <noscript>JavaScript must be enabled to use this page.</noscript>
 </div>
+
+<script src="/js/inventory.js" defer></script>
