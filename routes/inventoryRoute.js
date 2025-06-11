@@ -46,6 +46,9 @@ router.get(
 // Route to build Add New Vehicle
 router.get("/add-vehicle", utilities.handleErrors(invController.addVehicle));
 
+// Deliver the delete confirmation view
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteInventory));
+
 // Process the new classification data
 router.post(
   "/add-classification",
@@ -64,5 +67,8 @@ router.post(
 
 // Route to process the update inventory form submission
 router.post("/update", utilities.handleErrors(invController.updateInventory));
+
+// Handler delete operation
+router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem));
 
 module.exports = router;

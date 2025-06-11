@@ -1,0 +1,34 @@
+<%# A message block available for messages we want to add to the page later %>
+<%- messages() %>
+
+<%# Code block to display errors %>
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<div class="form-container">
+  <h1 class="form-title">Delete <%= inv_make %> <%= inv_model %></h1>
+  <p class="form-subtitle">Confirm Deletion - This action is permanent and cannot be undone.</p>
+
+  <form class="delete-form" action="/inv/delete" method="post">
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+    <label class="form-label" for="inv_make"><strong>Make:</strong></label><br>
+    <input class="form-input" type="text" id="inv_make" name="inv_make" value="<%= inv_make %>" readonly><br>
+
+    <label class="form-label" for="inv_model"><strong>Model:</strong></label><br>
+    <input class="form-input" type="text" id="inv_model" name="inv_model" value="<%= inv_model %>" readonly><br>
+
+    <label class="form-label" for="inv_year"><strong>Year:</strong></label><br>
+    <input class="form-input" type="number" id="inv_year" name="inv_year" value="<%= inv_year %>" readonly><br>
+
+    <label class="form-label" for="inv_price"><strong>Price:</strong></label><br>
+    <input class="form-input" type="text" id="inv_price" name="inv_price" value="$<%= inv_price %>" readonly><br>
+
+    <button class="form-submit" type="submit">Delete Vehicle</button>
+  </form>
+</div>
