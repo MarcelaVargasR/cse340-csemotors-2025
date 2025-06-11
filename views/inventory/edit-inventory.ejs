@@ -14,8 +14,7 @@
   <h1 class="form-title">Edit <%= inv_make %> <%= inv_model %></h1>
   <p class="form-subtitle">ALL FIELDS ARE REQUIRED.</p>
 
-  <form class="new-vehicle-form" action="/inv/update" method="post">
-    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+  <form id="updateForm" class="new-vehicle-form" action="/inv/update" method="post">
     <label class="form-label" for="classificationList"><strong>Classification:</strong></label><br>
     <%- classificationSelect %><br>
 
@@ -45,7 +44,13 @@
 
     <label class="form-label" for="inv_color"><strong>Color:</strong></label><br>
     <input class="form-input" type="text" id="inv_color" name="inv_color" required value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"><br>
+    
+    <input type="hidden" name="inv_id" <% if (locals.inv_id){ %> value= "<%= locals.inv_id %>" <%} %>>
 
-    <input class="form-submit" type="submit" value="Update Vehicle">
+    <button disabled id="updateButton" type="submit" >Update Vehicle</button>
   </form>
 </div>
+
+<script src="/js/inv-update.js"></script>
+
+
