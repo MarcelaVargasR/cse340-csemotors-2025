@@ -16,6 +16,7 @@
   padding-block: 20px;
   padding-inline: 10px;
   background-color: #262446;
+  gap: 20px;
 }
 
 .sitename-title {
@@ -33,6 +34,37 @@
   text-decoration: none;
   color: #ffffff;
   background-color: #262446;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-end;  
+  gap: 0.25rem;           
+}
+
+.welcome-user {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f4f4f4; 
+  text-decoration: none;
+}
+
+.welcome-user:hover {
+  text-decoration: underline;
+  color: #0056B3;
+}
+
+.logout-user{
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f4f4f4; 
+  text-decoration: none;
+}
+
+.logout-user:hover {
+  text-decoration: underline;
+  color: red;
 }
 
 /* nav */
@@ -481,6 +513,32 @@
   background-color: #0056b3;
 }
 
+/* Account View */
+.account-container {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background-color: #2d1b4c; 
+  border-radius: 10px;
+  color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.edit-account-link{
+  color: white;                
+  text-decoration:underline;      
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.edit-account-link:hover {
+  color: #0056b3;             
+  text-decoration: underline;  
+}
+
+
 /* New Classification View */
 .form-container {
   max-width: 400px;
@@ -680,6 +738,73 @@
   color: #0a2d77;
 }
 
+/* update account view form */
+.form-wrapper {
+  background-color: #2b195c;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-wrapper + .form-wrapper {
+  margin-top: 3rem;
+}
+
+.title-update-form{
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #ffffff;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.form-note {
+  font-size: 0.9rem;
+  color: #d4d4d4;
+  margin-bottom: 1rem;
+}
+
+.form-submit {
+  background-color: #0056b3;
+  color: white;
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+  background-color: #0a744f;
+}
 
 
 /* Footer */

@@ -13,6 +13,29 @@ router.get(
   utilities.handleErrors(accountController.buildRegister)
 );
 
+/* ***********************************
+ * Deliver Account Management View
+ * ******************************** */
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
+/* ***********************************
+ * Deliver logout route
+ * ******************************** */
+router.get("/logout", accountController.logout);
+
+/* ***********************************
+ * Update accout route
+ * ******************************** */
+router.get(
+  "/update/:accountId",
+  utilities.checkJWTToken,
+  utilities.handleErrors(accountController.updateAccount)
+);
+
 // // Route for processing registration without validation, just posts ALL inputs
 // router.post('/register', utilities.handleErrors(accountController.registerAccount))
 
@@ -38,13 +61,29 @@ router.post(
 );
 
 /* ***********************************
- * Deliver Account Management View
+ * Update data with validation
  * ******************************** */
-router.get(
-  "/",
-  utilities.checkLogin, 
-  utilities.handleErrors(accountController.buildAccountManagement)
+router.post(
+  "/update",
+  utilities.checkJWTToken,
+  regValidate.accountUpdateRules(),
+  regValidate.checkAccountUpdateData,
+  utilities.handleErrors(accountController.processAccountUpdate)
 );
+
+/* ***********************************
+ * Update password data with validation
+ * ******************************** */
+router.post(
+  "/update-password",
+  utilities.checkJWTToken,
+  regValidate.passwordUpdateRules(),
+  regValidate.checkPasswordUpdateData,
+  utilities.handleErrors(accountController.processPasswordUpdate)
+);
+
+
+
 
 // Export the router
 module.exports = router;
