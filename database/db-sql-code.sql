@@ -276,3 +276,6 @@ SET
 ALTER TABLE public.inventory
 ADD COLUMN is_in_wishlist boolean NOT NULL DEFAULT false; 
 
+-- delete wishlist column from inventory table
+ALTER TABLE public.inventory
+DROP COLUMN IF EXISTS is_in_wishlist;

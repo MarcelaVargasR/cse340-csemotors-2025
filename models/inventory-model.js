@@ -28,7 +28,7 @@ async function getInventoryByClassificationId(classification_id) {
 }
 
 async function getInventoryByIds(_ids) {
-  console.log("____IDS: ", _ids)
+  console.log("____IDS: ", _ids);
   const ids = _ids.map((_, index) => `$${index + 1}`).join(", ");
   try {
     const sql = `
@@ -36,7 +36,7 @@ async function getInventoryByIds(_ids) {
       WHERE inv_id IN(${ids})
     `;
     const data = await pool.query(sql, _ids);
-    return data.rows
+    return data.rows;
   } catch (error) {
     console.error("Error while getting inventory by Id's");
     return [];
@@ -227,13 +227,9 @@ async function wishList(action, accountId, invId) {
 async function addToWishList(accountId, invId) {
   try {
     const wishList = await getWishListByAccountId(accountId);
-    console.log("ACCOUNT:", accountId);
-    console.log("INVID: ", invId);
-    console.log("wishlist: ", wishList);
     const isItemInWishList = wishList.filter((item) => {
-      return item.invId === invId;
+      return item.inv_id === invId;
     });
-    console.log("ITEM: ", isItemInWishList);
     if (isItemInWishList.length) {
       throw new Error("Item already in list");
     }
@@ -276,5 +272,5 @@ module.exports = {
   deleteInventoryItem,
   addToWishList,
   getInventoryByIds,
-  getWishListByAccountId
+  getWishListByAccountId,
 };
