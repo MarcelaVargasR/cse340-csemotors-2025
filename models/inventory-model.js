@@ -201,42 +201,6 @@ async function deleteInventoryItem(inv_id) {
 /* ***************************
  *  whislist model
  * ************************** */
-async function wishList(action, accountId, invId) {
-  try {
-    if (action === "add") {
-      const sql = `
-        INSERT INTO wishlist (account_id, inv_id)
-        VALUES ($1, $2)
-      `;
-      await pool.query(sql, [accountId, invId]);
-      return { success: true, message: "Added to wishlist." };
-    }
-
-    if (action === "remove") {
-      const sql = `
-        DELETE FROM wishlist
-        WHERE account_id = $1 AND inv_id = $2
-      `;
-      await pool.query(sql, [accountId, invId]);
-      return { success: true, message: "Removed from wishlist." };
-    }
-
-    if (action === "exists") {
-      const sql = `
-        SELECT 1 FROM wishlist
-        WHERE account_id = $1 AND inv_id = $2
-      `;
-      const result = await pool.query(sql, [accountId, invId]);
-      return { success: true, exists: result.rowCount > 0 };
-    }
-
-    return { success: false, message: "Invalid action." };
-  } catch (error) {
-    console.error(`Wishlist.${action} error:`, error);
-    return { success: false, message: "Database error", error };
-  }
-}
-
 async function addToWishList(accountId, invId) {
   try {
     const wishList = await getWishListByAccountId(accountId);
@@ -274,6 +238,20 @@ async function getWishListByAccountId(accountId) {
   }
 }
 
+async function deleteFromWishlist(accountId, invId) {
+  try {
+    const sql = `
+      DELETE FROM wishlist 
+      WHERE account_id = $1 AND inv_id = $2;
+    `;
+    await pool.query(sql, [accountId, invId]);
+    return true;
+  } catch (error) {
+    console.error("Error while delete item from wishlist", error);
+    return false;
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
@@ -286,4 +264,5 @@ module.exports = {
   addToWishList,
   getInventoryByIds,
   getWishListByAccountId,
+  deleteFromWishlist
 };

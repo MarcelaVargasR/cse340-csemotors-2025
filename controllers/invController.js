@@ -1,3 +1,4 @@
+const e = require("connect-flash");
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 
@@ -9,7 +10,7 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
-  console.log("🚀 ~ data:", data)
+  console.log("🚀 ~ data:", data);
   const grid = await utilities.buildClassificationGrid(data, res);
   let nav = await utilities.getNav();
   const className = data[0].classification_name;
@@ -326,9 +327,7 @@ invCont.addToWishlist = async (req, res) => {
     throw new Error("");
   }
   const wishList = await invModel.getWishListByAccountId(accountId);
-  console.log("DATA2: ", wishList);
   const ids = wishList.map(({ inv_id }) => inv_id);
-  console.log("**IDS: ", ids);
   const data = await invModel.getInventoryByIds([...new Set(ids)]);
   const grid = await utilities.buildClassificationGrid(data, res);
   let nav = await utilities.getNav();
@@ -346,13 +345,21 @@ invCont.addToWishlist = async (req, res) => {
 invCont.removeFromWishlist = async (req, res) => {
   const invId = parseInt(req.params.invId);
   const accountId = res.locals.accountData.account_id;
-
-  const removeResult = await wishList("remove", accountId, invId);
-  if (removeResult.success) {
-    return res.status(200).json({ message: "Removed from wishlist." });
-  } else {
-    return res.status(500).json({ message: "Failed to remove from wishlist." });
+  const wasNotDeleted = invModel.deleteFromWishlist(accountId, invId);
+  if (!wasNotDeleted) {
+    throw new Error("");
   }
+  const wishList = await invModel.getWishListByAccountId(accountId);
+  const ids = wishList.map(({ inv_id }) => inv_id);
+  const data = await invModel.getInventoryByIds([...new Set(ids)]);
+  const grid = await utilities.buildClassificationGrid(data, res);
+  let nav = await utilities.getNav();
+  return res.render("./inventory/wishlist", {
+    title: "wishlist",
+    nav,
+    grid,
+    errors: null,
+  });
 };
 
 module.exports = invCont;
