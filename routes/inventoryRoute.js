@@ -95,4 +95,15 @@ router.post(
   utilities.handleErrors(invController.deleteInventoryItem)
 );
 
+/* ***************************
+ *  Add to Whislist
+ * ************************** */
+router.get("/wishlist/add/:invId", utilities.checkLogin, invController.addToWishlist);
+
+
+/* ***************************
+ *  Delete from Whislist
+ * ************************** */
+router.get("/wishlist/remove/:invId", utilities.checkLogin, invController.removeFromWishlist);
+
 module.exports = router;

@@ -9,7 +9,8 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
-  const grid = await utilities.buildClassificationGrid(data);
+  console.log("DATA1: ", data)
+  const grid = await utilities.buildClassificationGrid(data, res);
   let nav = await utilities.getNav();
   const className = data[0].classification_name;
   res.render("./inventory/classification", {
@@ -253,7 +254,9 @@ invCont.updateInventory = async function (req, res, next) {
     req.flash("notice", `The ${itemName} was successfully updated.`);
     res.redirect("/inv/");
   } else {
-    const classificationSelect = await utilities.buildClassificationList(classification_id);
+    const classificationSelect = await utilities.buildClassificationList(
+      classification_id
+    );
     const itemName = `${inv_make} ${inv_model}`;
     req.flash("notice", "Sorry, the update failed.");
     res.status(501).render("inventory/edit-inventory", {
@@ -276,7 +279,6 @@ invCont.updateInventory = async function (req, res, next) {
   }
 };
 
-
 /* ***************************
  * Build delete confirmation view
  * ************************** */
@@ -297,7 +299,6 @@ invCont.buildDeleteInventory = async function (req, res, next) {
   });
 };
 
-
 /* ***************************
  *  Delete Inventory Item
  * ************************** */
@@ -314,6 +315,63 @@ invCont.deleteInventoryItem = async function (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Add to Wishlist
+ * ************************** */
+invCont.addToWishlist = async (req, res) => {
+  const invId = parseInt(req.params.invId);
+  const accountId = res.locals.accountData.account_id;
+  const wasAdded = await invModel.addToWishList(accountId, invId);
+  if (!wasAdded) {
+    throw new Error("");
+  }
+  const wishList = await invModel.getWishListByAccountId(accountId);
+  console.log("DATA2: ", wishList)
+  const ids = wishList.map(({inv_id}) => inv_id)
+  console.log("**IDS: ", ids)
+  const data = await invModel.getInventoryByIds([...new Set(ids)])
+  
+  
+  const grid = await utilities.buildClassificationGrid(data, res);
 
+  let nav = await utilities.getNav();
+  return res.render("./inventory/wishlist", {
+    title: "wishlist",
+    nav,
+    grid,
+    errors: null,
+  });
+
+  const result = await wishList("exists", accountId, invId);
+  if (!result.success) {
+    return res.status(500).json({ message: "Could not check wishlist." });
+  }
+
+  if (result.exists) {
+    return res.status(400).json({ message: "Already in wishlist." });
+  }
+
+  const addResult = await wishList("add", accountId, invId);
+  if (addResult.success) {
+    return res.status(200).json({ message: "Added to wishlist." });
+  } else {
+    return res.status(500).json({ message: "Failed to add to wishlist." });
+  }
+};
+
+/* ***************************
+ *  Remove from Wishlist
+ * ************************** */
+invCont.removeFromWishlist = async (req, res) => {
+  const invId = parseInt(req.params.invId);
+  const accountId = res.locals.accountData.account_id;
+
+  const removeResult = await wishList("remove", accountId, invId);
+  if (removeResult.success) {
+    return res.status(200).json({ message: "Removed from wishlist." });
+  } else {
+    return res.status(500).json({ message: "Failed to remove from wishlist." });
+  }
+};
 
 module.exports = invCont;

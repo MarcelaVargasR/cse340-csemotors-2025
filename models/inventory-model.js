@@ -27,6 +27,22 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+async function getInventoryByIds(_ids) {
+  console.log("____IDS: ", _ids)
+  const ids = _ids.map((_, index) => `$${index + 1}`).join(", ");
+  try {
+    const sql = `
+      SELECT * FROM inventory
+      WHERE inv_id IN(${ids})
+    `;
+    const data = await pool.query(sql, _ids);
+    return data.rows
+  } catch (error) {
+    console.error("Error while getting inventory by Id's");
+    return [];
+  }
+}
+
 /* *****************************
  *   Add new vehicle classification
  * *************************** */
@@ -163,12 +179,91 @@ async function deleteInventoryItem(inv_id) {
   try {
     const sql = "DELETE FROM inventory WHERE inv_id = $1";
     const data = await pool.query(sql, [inv_id]);
-    return data
+    return data;
   } catch (error) {
-    new Error("Delete Inventory Error")
+    new Error("Delete Inventory Error");
   }
 }
 
+/* ***************************
+ *  whislist model
+ * ************************** */
+async function wishList(action, accountId, invId) {
+  try {
+    if (action === "add") {
+      const sql = `
+        INSERT INTO wishlist (account_id, inv_id)
+        VALUES ($1, $2)
+      `;
+      await pool.query(sql, [accountId, invId]);
+      return { success: true, message: "Added to wishlist." };
+    }
+
+    if (action === "remove") {
+      const sql = `
+        DELETE FROM wishlist
+        WHERE account_id = $1 AND inv_id = $2
+      `;
+      await pool.query(sql, [accountId, invId]);
+      return { success: true, message: "Removed from wishlist." };
+    }
+
+    if (action === "exists") {
+      const sql = `
+        SELECT 1 FROM wishlist
+        WHERE account_id = $1 AND inv_id = $2
+      `;
+      const result = await pool.query(sql, [accountId, invId]);
+      return { success: true, exists: result.rowCount > 0 };
+    }
+
+    return { success: false, message: "Invalid action." };
+  } catch (error) {
+    console.error(`Wishlist.${action} error:`, error);
+    return { success: false, message: "Database error", error };
+  }
+}
+
+async function addToWishList(accountId, invId) {
+  try {
+    const wishList = await getWishListByAccountId(accountId);
+    console.log("ACCOUNT:", accountId);
+    console.log("INVID: ", invId);
+    console.log("wishlist: ", wishList);
+    const isItemInWishList = wishList.filter((item) => {
+      return item.invId === invId;
+    });
+    console.log("ITEM: ", isItemInWishList);
+    if (isItemInWishList.length) {
+      throw new Error("Item already in list");
+    }
+    const sql = `
+      INSERT INTO wishlist
+      (account_id, inv_id)
+      VALUES
+      ($1, $2)
+    `;
+    await pool.query(sql, [accountId, invId]);
+    return true;
+  } catch (error) {
+    console.error("Error while adding to wishlist", error);
+    return false;
+  }
+}
+
+async function getWishListByAccountId(accountId) {
+  try {
+    const sql = `
+      SELECT * FROM wishlist
+      WHERE account_id = $1
+    `;
+    const result = await pool.query(sql, [accountId]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error while getting the wishlist", error);
+    return null;
+  }
+}
 
 module.exports = {
   getClassifications,
@@ -178,5 +273,8 @@ module.exports = {
   checkExistingClass,
   addInventory,
   updateInventory,
-  deleteInventoryItem
+  deleteInventoryItem,
+  addToWishList,
+  getInventoryByIds,
+  getWishListByAccountId
 };
