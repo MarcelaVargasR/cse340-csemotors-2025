@@ -9,7 +9,7 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
-  console.log("DATA1: ", data)
+  console.log("DATA1: ", data);
   const grid = await utilities.buildClassificationGrid(data, res);
   let nav = await utilities.getNav();
   const className = data[0].classification_name;
@@ -326,14 +326,11 @@ invCont.addToWishlist = async (req, res) => {
     throw new Error("");
   }
   const wishList = await invModel.getWishListByAccountId(accountId);
-  console.log("DATA2: ", wishList)
-  const ids = wishList.map(({inv_id}) => inv_id)
-  console.log("**IDS: ", ids)
-  const data = await invModel.getInventoryByIds([...new Set(ids)])
-  
-  
+  console.log("DATA2: ", wishList);
+  const ids = wishList.map(({ inv_id }) => inv_id);
+  console.log("**IDS: ", ids);
+  const data = await invModel.getInventoryByIds([...new Set(ids)]);
   const grid = await utilities.buildClassificationGrid(data, res);
-
   let nav = await utilities.getNav();
   return res.render("./inventory/wishlist", {
     title: "wishlist",
@@ -341,22 +338,6 @@ invCont.addToWishlist = async (req, res) => {
     grid,
     errors: null,
   });
-
-  const result = await wishList("exists", accountId, invId);
-  if (!result.success) {
-    return res.status(500).json({ message: "Could not check wishlist." });
-  }
-
-  if (result.exists) {
-    return res.status(400).json({ message: "Already in wishlist." });
-  }
-
-  const addResult = await wishList("add", accountId, invId);
-  if (addResult.success) {
-    return res.status(200).json({ message: "Added to wishlist." });
-  } else {
-    return res.status(500).json({ message: "Failed to add to wishlist." });
-  }
 };
 
 /* ***************************
