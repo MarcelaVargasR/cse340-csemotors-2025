@@ -271,3 +271,8 @@ UPDATE public.inventory
 SET 
   inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
   inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+
+-- 7. Add is_in_wishlist column to inventory table
+ALTER TABLE public.inventory
+ADD COLUMN is_in_wishlist boolean NOT NULL DEFAULT false; 
+
