@@ -96,14 +96,21 @@ router.post(
 );
 
 /* ***************************
+ *  Show Whislist
+ * ************************** */
+router.get("/wishlist", utilities.checkLogin, invController.showWishList);
+
+
+/* ***************************
  *  Add to Whislist
  * ************************** */
 router.get("/wishlist/add/:invId", utilities.checkLogin, invController.addToWishlist);
-
 
 /* ***************************
  *  Delete from Whislist
  * ************************** */
 router.get("/wishlist/remove/:invId", utilities.checkLogin, invController.removeFromWishlist);
+
+
 
 module.exports = router;

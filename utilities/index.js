@@ -24,6 +24,11 @@ Util.getNav = async function (req, res, next) {
   const listHtml = `
     <ul class="nav-list">
       ${listItemHtml}
+      <li class="nav-item">
+        <a class="nav-link" href="/inv/wishlist" title="See wishlist">
+        Wishlist
+        </a>
+      </li>
     </ul>
   `;
   return listHtml;
@@ -32,56 +37,6 @@ Util.getNav = async function (req, res, next) {
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
-// Util.buildClassificationGrid = async function (data, res) {
-//   if (data.length === 0) {
-//     return `<p class="notice">Sorry, no matching vehicles could be found.</p>`;
-//   }
-
-//   const listItemsHtml = data
-//     .map(
-//       (vehicle) => `
-//     <li class="vehicle-card">
-//       <a href="../../inv/detail/${vehicle.inv_id}" title="View ${
-//         vehicle.inv_make
-//       } ${vehicle.inv_model} details">
-//         <img class="vehicle-image-thumb" src="${
-//           vehicle.inv_thumbnail
-//         }" alt="Image of ${vehicle.inv_make} ${
-//         vehicle.inv_model
-//       } on CSE Motors" />
-//       </a>
-//       <div class="vehicle-card-info">
-//         ${
-//           res.locals.loggedin && res.locals.accountData?.account_type === "Client"
-//             ? `<form action="/wishlist/add" method="POST" class="wishlist-form">
-//                 <input type="hidden" name="inv_id" value="${vehicle.inv_id}">
-//                 <button type="submit" class="wishlist-button" title="Add to wishlist">❤️</button>
-//           </form>`
-//           : ""
-//     }
-//         <hr />
-//         <h2  class="vehicle-title">
-//           <a href="../../inv/detail/${vehicle.inv_id}" title="View ${
-//         vehicle.inv_make
-//       } ${vehicle.inv_model} details">
-//             ${vehicle.inv_make} ${vehicle.inv_model}
-//           </a>
-//         </h2>
-//         <span class="vehicle-price">$${new Intl.NumberFormat("en-US").format(
-//           vehicle.inv_price
-//         )}</span>
-//       </div>
-//     </li>
-//   `
-//     )
-//     .join("");
-
-//   return `
-//     <ul id="inv-display">
-//       ${listItemsHtml}
-//     </ul>
-//   `;
-// };
 Util.buildClassificationGrid = async function (data, res) {
   if (data.length === 0) {
     return `<p class="notice">Sorry, no matching vehicles could be found.</p>`;

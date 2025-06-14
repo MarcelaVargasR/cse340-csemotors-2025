@@ -340,6 +340,25 @@ invCont.addToWishlist = async (req, res) => {
 };
 
 /* ***************************
+ *  Show Wishlist
+ * ************************** */
+invCont.showWishList = async (req, res) => {
+  let nav = await utilities.getNav();
+  const accountId = res.locals.accountData.account_id;
+  const wishList = await invModel.getWishListByAccountId(accountId);
+  const ids = wishList.map(({ inv_id }) => inv_id);
+  const data = await invModel.getInventoryByIds([...new Set(ids)]);
+  const grid = await utilities.buildClassificationGrid(data, res);
+
+  return res.render("./inventory/wishlist", {
+    title: "wishlist",
+    nav,
+    grid,
+    errors: null,
+  });
+};
+
+/* ***************************
  *  Remove from Wishlist
  * ************************** */
 invCont.removeFromWishlist = async (req, res) => {
