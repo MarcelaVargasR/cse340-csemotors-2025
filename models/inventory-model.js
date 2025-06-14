@@ -41,7 +41,6 @@ async function getInventoryByClassificationId(classification_id) {
 }
 
 async function getInventoryByIds(_ids) {
-  console.log("____IDS: ", _ids);
   const ids = _ids.map((_, index) => `$${index + 1}`).join(", ");
   try {
     const sql = `
