@@ -87,39 +87,52 @@ Util.buildClassificationGrid = async function (data, res) {
     return `<p class="notice">Sorry, no matching vehicles could be found.</p>`;
   }
 
-  const listItemsHtml = data.map((vehicle) => {
-    const heartIcon = res.locals.loggedin
-      ? `<a href="/inv/wishlist/add/${vehicle.inv_id}" class="wishlist-heart" title="Add to wishlist">♡</a>`
-      : `<a href="/inv/wishlist/remove/${vehicle.inv_id}" class="wishlist-heart" title="Remove from wishlist">♥</a>`; 
+  const listItemsHtml = data
+    .map((vehicle) => {
+      let heartIcon = "";
+      if (res.locals.loggedin) {
+        heartIcon = vehicle.is_in_wishlist
+          ? `<a href="/inv/wishlist/remove/${vehicle.inv_id}" class="wishlist-heart" title="Remove from wishlist">♥</a>`
+          : `<a href="/inv/wishlist/add/${vehicle.inv_id}" class="wishlist-heart" title="Add to wishlist">♡</a>`;
+      }
 
-    return `
+      return `
       <li class="vehicle-card">
         <div class="vehicle-card-image-container">
-          <a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
-            <img class="vehicle-image-thumb" src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors" />
+          <a href="../../inv/detail/${vehicle.inv_id}" title="View ${
+        vehicle.inv_make
+      } ${vehicle.inv_model} details">
+            <img class="vehicle-image-thumb" src="${
+              vehicle.inv_thumbnail
+            }" alt="Image of ${vehicle.inv_make} ${
+        vehicle.inv_model
+      } on CSE Motors" />
           </a>
         </div>
         <div class="vehicle-card-info">
           <hr />
           <h2 class="vehicle-title">
-            <a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            <a href="../../inv/detail/${vehicle.inv_id}" title="View ${
+        vehicle.inv_make
+      } ${vehicle.inv_model} details">
               ${vehicle.inv_make} ${vehicle.inv_model}
             </a>
           </h2>
           <div class="vehicle-price-row">
-            <span class="vehicle-price">$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}
+            <span class="vehicle-price">$${new Intl.NumberFormat(
+              "en-US"
+            ).format(vehicle.inv_price)}
           </span>
           ${heartIcon}
           </div>
         </div>
       </li>
     `;
-  }).join("");
+    })
+    .join("");
 
   return `<ul id="inv-display">${listItemsHtml}</ul>`;
 };
-
-
 
 /* **************************************
  * Build the single view HTML

@@ -14,13 +14,26 @@ async function getClassifications() {
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
   try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
-      [classification_id]
-    );
+    const sql = `
+      SELECT 
+      i.*, 
+      c.classification_name,
+      CASE 
+      WHEN w.inv_id IS NOT NULL THEN true 
+      ELSE false 
+      END AS is_in_wishlist
+      FROM 
+      public.inventory AS i
+      JOIN 
+      public.classification AS c 
+      ON i.classification_id = c.classification_id
+      LEFT JOIN 
+      public.wishlist AS w 
+      ON i.inv_id = w.inv_id
+      WHERE 
+      i.classification_id = $1;
+    `;
+    const data = await pool.query(sql, [classification_id]);
     return data.rows;
   } catch (error) {
     console.error("getclassificationsbyid error " + error);
